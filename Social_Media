@@ -1,0 +1,76 @@
+package Social_Media;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Social {
+    public static void main(String[] args) {
+        User user1 = new User("Someone", "someone@gmail.com");
+        Post post1 = new Post(user1, "This is my first post");
+        Like like = new Like(user1);
+        post1.addLike(like);
+        post1.addLike(like);
+        Comment comment1 = new Comment(user1,post1, "Very good comment1");
+        Comment comment2 = new Comment(user1, post1,"Very good comment2");
+        post1.addComment(comment1);
+        post1.addComment(comment2);
+        System.out.println("Number of likes in post1 is "+post1.getLikesCount());
+        for (int i = 0; i< post1.getComments().size();i++){
+            System.out.println(post1.getComments().get(i).getContent());
+        }
+    }
+}
+
+class User{
+    private String name;
+    private String email;
+
+    User(String name, String email){
+        this.name = name;
+        this.email = email;
+    }
+}
+class Post {
+    private User author;
+    private String content;
+    private List<Comment> comments;
+    private List<Like> likes;
+    public Post(User author, String content) {
+        this.author = author;
+        this.content = content;
+        this.comments = new ArrayList<>();
+        this.likes = new ArrayList<>();
+    }
+    public void addComment(Comment comment) {
+        comments.add(comment);
+    }
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void addLike(Like like) {
+        likes.add(like);
+    }
+    public int getLikesCount() {
+        return likes.size();
+    }
+}
+class Comment {
+    private User author;
+    private Post post;
+    private String content;
+    public Comment(User author,Post post, String content) {
+        this.author = author;
+        this.content = content;
+        this.post=post;
+    }
+    public String getContent() {
+        return content;
+    }
+}
+class Like {
+    private User user;
+    public Like(User user) {
+        this.user = user;
+    }
+}
